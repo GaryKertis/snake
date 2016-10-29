@@ -9,9 +9,9 @@ public:
 	sf::RectangleShape get();
 	void move(float);
 	void changeDir(Direction);
+	Direction direction = right;
 private:
 	sf::RectangleShape rectangle;
-	Direction direction = right;
 };
 
 #endif

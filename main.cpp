@@ -9,6 +9,7 @@ int main()
 	//window.setFramerateLimit(60); // call it once, after creating the window
 
 	Snake snake;
+	snake.changeDir(down);
 	// run the program as long as the window is open
 	while (window.isOpen())
 	{
@@ -22,7 +23,6 @@ int main()
 		}
 
 		snake.move(1);
-
         window.clear(sf::Color::Black);
 		for ( auto & segment : snake.segments ) {
 			window.draw(segment.get());
