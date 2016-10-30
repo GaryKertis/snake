@@ -2,6 +2,7 @@
 #define SNAKE_H
 #include "segment.h"
 #include "direction.h"
+#include "food.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 using std::vector;
@@ -20,7 +21,8 @@ public:
 	void move(float);
 
 	//check if the snake has collided with itself
-	void checkForCollisions();
+	bool checkForCollision(Food);
+	bool checkForCollision(Segment);
 
 	void draw(sf::RenderWindow);
 	//draw the snake

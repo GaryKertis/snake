@@ -1,14 +1,18 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 #include "snake.h"
 
 int main()
 {
+	srand(time(0));
+	int snakeSpeed = 1;
 	// create the window
 	sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
 	window.setVerticalSyncEnabled(true); // call it once, after creating the window
 	//window.setFramerateLimit(60); // call it once, after creating the window
 
 	Snake snake;
+	Food food;
 	snake.changeDir(down);
 	// run the program as long as the window is open
 	while (window.isOpen())
@@ -22,11 +26,32 @@ int main()
 				window.close();
 		}
 
-		snake.move(1);
         window.clear(sf::Color::Black);
-		for ( auto & segment : snake.segments ) {
-			window.draw(segment.get());
+
+		snake.move(snakeSpeed);
+		bool ateFood = snake.checkForCollision(food);
+
+		if (ateFood) {
+			snake.grow();
+			food.move();
+			snakeSpeed += 0.1;
 		}
+
+		int counter = 0;
+		for ( auto & segment : snake.segments ) {
+
+			if (counter > 2) {
+			    bool crash = snake.checkForCollision(segment);
+			    if (crash) {
+			    	std::cout << "Game Over" << std::endl;
+			    }
+		    }
+
+			window.draw(segment.get());
+			counter++;
+		}
+
+		window.draw(food.get());
 
 		// end the current frame
 		window.display();
