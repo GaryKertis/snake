@@ -1,38 +1,41 @@
 #include "snake.h"
+#include "changePoint.h"
+
 #include <iostream>
 
 Snake::Snake() {
 	int snakeSize = 3;
 }
 
+void Snake::keyboardListener() {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	 	changeDir(left);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	 	changeDir(right);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	 	changeDir(up);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	 	changeDir(down);
+}
+
 void Snake::move(float amount) {
+	keyboardListener();
 	for ( auto & segment : segments ) {
-
-		sf::Vector2f position = segment.get().getPosition();
-		switch(segment.direction) {
-	    case up : if (position.y <= changePoint.y)
-				    segment.changeDir(direction);
-		    break;
-	    case down : if (position.y >= changePoint.y)
-				    segment.changeDir(direction);
-		    break;
-	    case left : if (position.x <= changePoint.x)
-				    segment.changeDir(direction);
-		    break;
-	    case right : if (position.x >= changePoint.x)
-				    segment.changeDir(direction);
-		    break;
-	}
-
 		segment.move(amount);
 	}
 }
 
 void Snake::changeDir(Direction dir) {
 	direction = dir;
-	Segment lastseg = segments.back();
-	changePoint = lastseg.get().getPosition();
-	changePoint.x += 10;
-	changePoint.y += 10;
-	//segments.back().changeDir(direction);
+	Segment firstSeg = segments.front();
+	sf::Vector2f point = firstSeg.get().getPosition();
+
+	ChangePoint changePoint = {
+		point,
+		direction
+	};
+
+	for ( auto & segment : segments ) {
+		segment.addChangePoint(changePoint);
+	}
 }

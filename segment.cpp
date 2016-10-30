@@ -11,7 +11,43 @@ void Segment::changeDir(Direction dir) {
 	direction = dir;
 }
 
+void Segment::addChangePoint(ChangePoint changePoint) {
+	changeQueue.push_back(changePoint);
+}
+
+void Segment::changeQueueListener() {
+
+		if (changeQueue.size()) {
+			sf::Vector2f position = rectangle.getPosition();
+			ChangePoint changePoint = changeQueue.front();
+			switch(direction) {
+			    case up : if (position.y <= changePoint.point.y) {
+						    	changeDir(changePoint.direction);
+						    	changeQueue.erase(changeQueue.begin());
+							}
+				    break;
+			    case down : if (position.y >= changePoint.point.y) {
+						    	changeDir(changePoint.direction);
+						    	changeQueue.erase(changeQueue.begin());
+							}
+				    break;
+			    case left : if (position.x <= changePoint.point.x) {
+						    	changeDir(changePoint.direction);
+						    	changeQueue.erase(changeQueue.begin());
+							}
+				    break;
+			    case right : if (position.x >= changePoint.point.x) {
+						    	changeDir(changePoint.direction);
+						    	changeQueue.erase(changeQueue.begin());
+							}
+				    break;
+			}
+		}
+
+}
+
 void Segment::move(float amount) {
+	changeQueueListener();
 	sf::Vector2f position = rectangle.getPosition(); // = (10, 20)
 	switch(direction) {
 	    case up : rectangle.setPosition(position.x,  position.y - amount);

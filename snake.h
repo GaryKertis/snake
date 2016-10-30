@@ -28,7 +28,7 @@ public:
 	vector<Segment> segments = {Segment(10, 50), Segment(21, 50), Segment(32, 50), Segment(43, 50), Segment(54, 50), Segment(65, 50)};
 private:
 	Direction direction = left;
-	sf::Vector2f changePoint;
+	void keyboardListener();
 };
 
 #endif
