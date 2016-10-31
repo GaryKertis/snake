@@ -2,8 +2,23 @@
 #include "changePoint.h"
 #include "food.h"
 #include <iostream>
+
+
 Snake::Snake() {
-	int snakeSize = 3;
+	int rand_x = rand() % 500;
+	int rand_y = rand() % 500;
+
+	for (int i = 0; i < snakeLength; i++) {
+		segments.push_back(Segment(rand_x + i * segmentSize, rand_y));
+	}
+}
+
+float Snake::speed(float newSpeed) {
+	f_speed -= newSpeed;
+}
+
+float Snake::speed() {
+	return f_speed;
 }
 
 void Snake::keyboardListener() {
@@ -20,7 +35,7 @@ void Snake::keyboardListener() {
 
 void Snake::grow() {
 	Segment lastSeg = segments.back();
-	lastSeg.move(-11);
+	lastSeg.move(-segmentSize);
 	segments.push_back(lastSeg);
 }
 
@@ -28,6 +43,17 @@ bool Snake::checkForCollision(Food food) {
 	sf::FloatRect snakeBox = segments.front().get().getGlobalBounds();
 	sf::FloatRect foodBox = food.get().getGlobalBounds();
 	return snakeBox.intersects(foodBox);
+}
+
+bool Snake::checkForCollision(Walls walls) {
+	bool collision = false;
+	sf::FloatRect snakeBox = segments.front().get().getGlobalBounds();
+	for ( auto & wall : walls.get() ) {
+		sf::FloatRect wallBox = wall.getGlobalBounds();
+		collision = snakeBox.intersects(wallBox);
+		if (collision) break;
+	}
+	return collision;
 }
 
 bool Snake::checkForSelfCollision() {

@@ -3,6 +3,7 @@
 #include "segment.h"
 #include "direction.h"
 #include "food.h"
+#include "walls.h"
 #include <SFML/Graphics.hpp>
 #include <vector>
 using std::vector;
@@ -22,14 +23,23 @@ public:
 
 	//check if the snake has collided with itself
 	bool checkForCollision(Food);
+	bool checkForCollision(Walls);
 	bool checkForSelfCollision();
 
 	void draw(sf::RenderWindow);
 	//draw the snake
 
-	vector<Segment> segments = {Segment(10, 50), Segment(21, 50), Segment(32, 50), Segment(43, 50), Segment(54, 50), Segment(60, 50)};
+	vector<Segment> segments;
 	void keyboardListener();
+
+	float speed();
+	float speed(float);
+	int score();
+
 private:
+	int snakeLength = 5;
+	int segmentSize = 11;
+	float f_speed = 7;
 	Direction newDirection = none;
 };
 

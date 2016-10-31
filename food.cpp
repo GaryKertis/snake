@@ -7,8 +7,8 @@ Food::Food() {
 }
 
 void Food::move() {
-	int rand_x = rand() % 790;
-	int rand_y = rand() % 590;
+	int rand_x = rand() % 560;
+	int rand_y = rand() % 560;
 	circle.setPosition(sf::Vector2f(rand_x, rand_y));
 }
 
