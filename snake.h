@@ -27,10 +27,10 @@ public:
 	void draw(sf::RenderWindow);
 	//draw the snake
 
-	vector<Segment> segments = {Segment(10, 50), Segment(21, 50), Segment(32, 50), Segment(43, 50), Segment(54, 50), Segment(65, 50)};
-private:
-	Direction direction = left;
+	vector<Segment> segments = {Segment(10, 50), Segment(21, 50), Segment(32, 50), Segment(43, 50), Segment(54, 50), Segment(60, 50)};
 	void keyboardListener();
+private:
+	Direction newDirection = none;
 };
 
 #endif

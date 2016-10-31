@@ -1,6 +1,6 @@
 #ifndef DIRECTION_H
 #define DIRECTION_H
 
-enum Direction {up, down, left, right};
+enum Direction {none, up, down, left, right};
 
 #endif

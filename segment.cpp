@@ -23,21 +23,25 @@ void Segment::changeQueueListener() {
 			switch(direction) {
 			    case up : if (position.y <= changePoint.point.y) {
 						    	changeDir(changePoint.direction);
+						    	rectangle.setPosition(changePoint.point);
 						    	changeQueue.erase(changeQueue.begin());
 							}
 				    break;
 			    case down : if (position.y >= changePoint.point.y) {
 						    	changeDir(changePoint.direction);
+						   		rectangle.setPosition(changePoint.point);
 						    	changeQueue.erase(changeQueue.begin());
 							}
 				    break;
 			    case left : if (position.x <= changePoint.point.x) {
 						    	changeDir(changePoint.direction);
+						    	rectangle.setPosition(changePoint.point);
 						    	changeQueue.erase(changeQueue.begin());
 							}
 				    break;
 			    case right : if (position.x >= changePoint.point.x) {
 						    	changeDir(changePoint.direction);
+						    	rectangle.setPosition(changePoint.point);
 						    	changeQueue.erase(changeQueue.begin());
 							}
 				    break;

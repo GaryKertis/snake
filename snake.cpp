@@ -7,14 +7,15 @@ Snake::Snake() {
 }
 
 void Snake::keyboardListener() {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-	 	changeDir(left);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-	 	changeDir(right);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-	 	changeDir(up);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-	 	changeDir(down);
+	Direction direction = segments.front().direction;
+	if (direction != right && sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) 
+	 	newDirection = left;
+	if (direction != left && sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	 	newDirection = right;
+	if (direction != down && sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	 	newDirection = up;
+	if (direction != up && sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	 	newDirection = down;
 }
 
 void Snake::grow() {
@@ -36,14 +37,13 @@ bool Snake::checkForCollision(Segment segment) {
 }
 
 void Snake::move(float amount) {
-	keyboardListener();
+	if (newDirection) changeDir(newDirection);
 	for ( auto & segment : segments ) {
 		segment.move(amount);
 	}
 }
 
-void Snake::changeDir(Direction dir) {
-	direction = dir;
+void Snake::changeDir(Direction direction) {
 	Segment firstSeg = segments.front();
 	sf::Vector2f point = firstSeg.get().getPosition();
 
@@ -55,4 +55,6 @@ void Snake::changeDir(Direction dir) {
 	for ( auto & segment : segments ) {
 		segment.addChangePoint(changePoint);
 	}
+
+	newDirection = none;
 }
