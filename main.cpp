@@ -5,7 +5,17 @@
 Snake snake;
 Food food;
 float snakeSpeed = 7;
-float snakeCounter = 0; 
+float snakeCounter = 0;
+
+void levelUp() {
+	snakeSpeed -= 0.1;
+	snake.grow();
+	food.move();
+}
+
+void gameOver() {
+	std::cout << "Game Over" << std::endl;
+}
 
 int main()
 {
@@ -31,23 +41,10 @@ int main()
         window.clear(sf::Color::Black);
 
         bool ateFood = snake.checkForCollision(food);
+		bool crash = snake.checkForSelfCollision();
 
-		if (ateFood) {
-			snakeSpeed -= 0.1;
-			snake.grow();
-			food.move();
-		}
-
-		int counter = 0;
-		for ( auto & segment : snake.segments ) {
-			if (counter > 2) {
-			    bool crash = snake.checkForCollision(segment);
-			    if (crash) {
-			    	std::cout << "Game Over" << std::endl;
-			    }
-		    }
-			counter++;
-		}
+		if (ateFood) levelUp();
+		if (crash) gameOver();
 
 		snake.keyboardListener();
 

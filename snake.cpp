@@ -1,7 +1,7 @@
 #include "snake.h"
 #include "changePoint.h"
 #include "food.h"
-
+#include <iostream>
 Snake::Snake() {
 	int snakeSize = 3;
 }
@@ -30,10 +30,19 @@ bool Snake::checkForCollision(Food food) {
 	return snakeBox.intersects(foodBox);
 }
 
-bool Snake::checkForCollision(Segment segment) {
-	sf::FloatRect snakeBox = segments.front().get().getGlobalBounds();
-	sf::FloatRect segmentBox = segment.get().getGlobalBounds();
-	return snakeBox.intersects(segmentBox);
+bool Snake::checkForSelfCollision() {
+	bool collision = false;
+	int counter = 0;
+	for ( auto & segment : segments ) {
+		Segment head = segments.front();
+		sf::FloatRect headBox = segments.front().get().getGlobalBounds();
+		sf::FloatRect segmentBox = segment.get().getGlobalBounds();
+		sf::IntRect result;
+		collision = counter && segmentBox.intersects(headBox);
+		if (collision) break;
+		counter++;
+	}
+	return collision;
 }
 
 void Snake::move(float amount) {

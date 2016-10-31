@@ -22,7 +22,7 @@ public:
 
 	//check if the snake has collided with itself
 	bool checkForCollision(Food);
-	bool checkForCollision(Segment);
+	bool checkForSelfCollision();
 
 	void draw(sf::RenderWindow);
 	//draw the snake
